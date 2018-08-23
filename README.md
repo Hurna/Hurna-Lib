@@ -1,6 +1,9 @@
-# H.urna Core - C++
+# H.urna Lib - C++
 
-H.urna Core is a relatively small **open source template project** that uses modern C++.
+H.urna Lib is a relatively small **open source project** that gives you the ability to transform
+your algorithms into visualizations. A demonstration of some algorithms visualizations is available here:
+[Online Demo - Hurna Explorer](https://demo.hurna.io)
+
 It is implemented as a **cross-platform, easy to build, full headed library** containing some of the
 most known **Algorithms and Data Structures** (cf. [Implementations](#implementations)).
 
@@ -8,9 +11,20 @@ It aims to **help to learn programming in C++, practice job interview coding tes
 allows anyone to **build its own best quality software and
 work-flow with no proprietary dependencies nor costs**.
 
-It uses **best practices software development**
-(cross-building, unit testing, automated documentation...); giving you a **great caveat to start developing
-with the promise to conserve great quality standards**.
+**What's the point?**
+- You will be able to visualize your own algorithms.
+- You'll have a visual debugging tool.
+- You'll have the platform to implement your own tests and data generations
+- You'll have a visual tool to communicate on your algorithms
+- You'll have already implemented algorithms that can run with your own data and strategies
+- You'll have precise benchmark performance analysis
+- You'll have an exercise platform easily usable by your students
+- ...
+
+
+Hurna Lib uses **best practices software development**
+(cross-building, unit testing, automated documentation...); giving you a
+**great caveat to start developing with the promise to conserve great quality standards**.
 Please note that **all the possible dependencies included are open-source and free to use**.
 
 ## Practices and Guidelines
@@ -70,15 +84,16 @@ it **improves work-flow, increase productivity, gives you agility and project he
 
 ## Quick Access
 
-- [**Documentation**](http://wiki.hurna.io/hurna_core/doc/index.html)
-- [**Git Repository**](https://github.com/Hurna/Hurna-Core)
-- [**Kitware Dashboard**](https://my.cdash.org/index.php?project=Hurna+Core)
+- [**Documentation**](http://wiki.hurna.io/hurna_lib/doc/index.html)
+- [**Git Repository**](https://github.com/Hurna/Hurna-Lib)
+- [**Kitware Dashboard**](https://my.cdash.org/index.php?project=Hurna+Lib)
 
 ### Related
 
-- [**H.urna Website**](http://hurna.io/): The main website of H.urna organization.
-- [**H.urna Explorer**](http://demo.hurna.io/): A free, online, visualization platform.
-- [**H.urna Wiki**](http://wiki.hurna.io/): The main Wiki of H.urna organization.
+- [**H.urna Website**](https://hurna.io/): The main website of H.urna organization.
+- [**H.urna Explorer**](https://demo.hurna.io/): A free, online, visualization platform.
+- [**H.urna Community**](https://community.hurna.io/): The community.
+- [**H.urna Wiki**](https://wiki.hurna.io/): The main Wiki of H.urna organization.
 
 # Getting Started
 ## Build using CMake-GUI:
@@ -91,9 +106,9 @@ it **improves work-flow, increase productivity, gives you agility and project he
 
 ## Build using Command-Line (UNIX):
 
-    mkdir Hurna-Core-Build (Create Build directory)
-    cd Hurna-Core-Build    (Open build director)
-    ccmake ../Hurna-Core   (Configure the make given Source repository)
+    mkdir Hurna-Lib-Build  (Create Build directory)
+    cd Hurna-Lib-Build     (Open build director)
+    ccmake ../Hurna-Lib    (Configure the make given Source repository)
                            (Press 'c' to configure, then 'g' to generate the solution)
     make                   (Make command, use -j parameter to use multi-core)
 
@@ -122,45 +137,70 @@ You can whether use **CTest** or **manually** run the unit tests.
 
 To run the set of tests in multi-core:
 
-    cd Hurna-Core-Build
+    cd Hurna-Lib-Build
     ctest -j4
 
 To run the set and upload them to the dashboard:
 
-    cd Hurna-Core-Build
+    cd Hurna-Lib-Build
     ctest -D Experimental
 
 To manually run the 'TestBasicBinary' Unit Test (using GTest):
 
-    Hurna-Core-Build/Modules/Search/Testing/Debug/TestBinary.exe  (Win)
-    ./Hurna-Core-Build/Modules/Search/Testing/Debug/TestBinary    (UNIX)
+    Hurna-Lib-Build/Modules/Search/Testing/Debug/TestBinary.exe  (Win)
+    ./Hurna-Lib-Build/Modules/Search/Testing/Debug/TestBinary    (UNIX)
 
-# <a name="implementations"></a>Implementations
-## Combinatory
-- **Combinations:** Compute all possible combinations of elements containing within the sequence.
-- **Intersection:** Compute the intersection of two sequences keeping duplicate keys distinct.
-- **IsInterleaved:** Determine whether or not a sequence is the interleave of the two others.
-- **Permutations:** Compute all possible permutations of elements containing within the sequence.
-
-## Data Structures
-- **Binary Search Tree:** Binary Search Tree, Ordered Tree or Sorted Binary Tree divides all its sub-trees into two segments: left sub-tree and right sub-tree.
+# <a name="implementations"></a>Visual Implementations
+## Mazes Generators
+- **Binary Tree ([Online Demo](https://demo.hurna.io/#path=maze/binary)):** Binary Tree Maze Generator is
+one of the very rareful algorithms with the ability to generate a perfect maze without
+keeping any state at all: it is a true memoryless Maze generation algorithm with no
+limit to the size of Maze you can create. It can build the entire maze by looking at each cell independently.
+This is basically the simplest and fastest algorithm possible.
+- **Depth First Search (DFS) ([Online Demo](https://demo.hurna.io/#path=maze/dfs_generator)):**
+Depth First Search (DFS) Maze Generator is a randomized version of the depth-first search traversal algorithm.
+Implemented with a stack, this approach is one of the simplest ways to generate a maze.
+- **Kruskal's ([Online Demo](https://demo.hurna.io/#path=maze/kruskals_generator)):**
+Kruskal's Maze Generator is a randomized version of Kruskal’s algorithm: a method for producing a
+minimal spanning tree for a weighted graph.
+Kruskal's is interesting because it doesn't "grow" the Maze like a tree, but rather carves
+passage segments all over the Maze at random, making it very fun to watch. Still,
+it results in a perfect Maze in the end.
+The counterpart is to require storage proportional to the size of the Maze,
+along with the ability to enumerate each edge between cells in random order
+(Using here a set of edges and taking them randomly).
+- **Prim's ([Online Demo](https://demo.hurna.io/#path=maze/prims_generator)):**
+Prim's Maze Generator is a randomized version of Prim's algorithm:
+a method for producing a minimal spanning tree for a undirected weighted graph.
+Prim's algorithm creates a tree by getting the adjacent cells and finding the best one to travel to next.
+To Generate mazes using Prim's, we will instead take a random cell to travel to the next one.
+- **Recursive Division ([Online Demo](https://demo.hurna.io/#path=maze/recursive_division_generator)):**
+Recursive Division Maze Generator is the fastest algorithm without directional biases.
+While Recurssive division really stands out with respect to parallelism,
+this algorithm is particularly fascinating because of its fractal nature:
+you could theoretically continue the process indefinitely at finer and
+finer levels of detail (smaller and smaller scales).
+This algorithm is somewhat similar to recursive backtracking, since they're both stack based,
+except this focuses on walls instead of passages. As a Wall Builders generator,
+the process begins with a large empty space (all cells are connected), and adds walls
+(disconnect cells) until a maze results.
+- **Sidewinder ([Online Demo](https://demo.hurna.io/#path=maze/sidewinder_generator)):**
+Sidewinder Maze Generator is very similar to the Binary Tree algorithm, and only slightly more complicated.
+Furthermore, the Sidewinder algorithm only needs to consider the current row,
+and therefore can be used to generate infinitely large mazes (like the Binary Tree).
+While binary tree mazes have two of its four sides being one long passage,
+a Sidewinder mazes have just one long passage.
 
 ## Search
-- **Binary Search:** Iteratively proceed a dichotomous search, within a sorted sequence, on the first occurrence of the key.
-- **K'th Order Statistics:** Find the k'th smallest/biggest element.
-- **Maximal/Minimal Distance:** Identify the two elements of the sequence that give the maximal/minimal distance.
-- **Maximal/Minimal M Elements:** Retrieve the m maximal/minimal values sorted in respectively decreasing increasing order.
-- **Maximal/Minimal Sub-Sequence:** Identify the sub-sequence with the maximum/minimum sum. One of the problem resolved by this algorithm is:
-"Given an array of gains/losses over time, find the period that represents the best/worst cumulative gain."
+- **Binary Search ([Online Demo](https://demo.hurna.io/#path=search/binary)):** Iteratively proceed a dichotomous search, within a sorted sequence, on the first occurrence of the key.
+- **K'th Order Statistics ([Online Demo](https://demo.hurna.io/#path=search/kth_element)):** Find the k'th smallest/biggest element.
 
 ## Sort
-- **Bubble Sort:** Sometimes referred to as sinking sort: proceed an in-place bubble-sort on the elements.
-- **Cocktail Sort:** Variation of bubble sort. Optimize a bubble sort bubbling in both directions on each pass.
-- **Comb Sort:** Variation of bubble sort. The inner loop of bubble sort, which does the actual swap,
+- **AggregateInplace ([Online Demo](https://demo.hurna.io/#path=sort/aggregate_in_place)):** Functor that proceeds a in place merge of two sequences of elements.
+- **Bubble Sort ([Online Demo](https://demo.hurna.io/#path=sort/bubble_sort)):** Sometimes referred to as sinking sort: proceed an in-place bubble-sort on the elements.
+- **Cocktail Sort ([Online Demo](https://demo.hurna.io/#path=sort/cocktail_sort)):** Variation of bubble sort. Optimize a bubble sort bubbling in both directions on each pass.
+- **Comb Sort ([Online Demo](https://demo.hurna.io/#path=sort/comb_sort)):** Variation of bubble sort. The inner loop of bubble sort, which does the actual swap,
 is modified such that gap between swapped elements goes down (for each iteration of outer loop) in steps of a "shrink factor" k: [ n/k, n/k2, n/k3, ..., 1 ].
-- **MergeInplace:** Functor that proceeds a in place merge of two sequences of elements.
-- **MergeSort:** John von Neumann in 1945: Proceed merge-sort on the elements whether using an in-place strategy or using a buffer.
-- **MergeWithBuffer:** Functor that proceeds a merge of two sequences of elements using a buffer to improve time computation.
-- **Partition-Exchange:** Proceed an in-place partitioning on the elements.
-- **Quick Sort - Partition-Exchange Sort:** Proceed an in-place quick-sort on the elements.
-- **Raddix Sort - LSD:** Proceed the Least Significant Digit Raddix sort, a non-comparative integer sorting algorithm.
+- **MergeSort ([Online Demo](https://demo.hurna.io/#path=sort/merge_in_place)):** John von Neumann in 1945: Proceed merge-sort on the elements whether using an in-place strategy or using a buffer.
+- **Partition-Exchange ([Online Demo](https://demo.hurna.io/#path=sort/partition)):** Proceed an in-place partitioning on the elements.
+- **Quick Sort - Partition-Exchange Sort ([Online Demo](https://demo.hurna.io/#path=search/quick_sort)):** Proceed an in-place quick-sort on the elements.
