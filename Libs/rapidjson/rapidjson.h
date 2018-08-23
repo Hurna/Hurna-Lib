@@ -121,7 +121,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // RAPIDJSON_HAS_STDSTRING
-// SHA
+// HUL
 #ifndef RAPIDJSON_HAS_STDSTRING
 #ifdef RAPIDJSON_DOXYGEN_RUNNING
 #define RAPIDJSON_HAS_STDSTRING 1 // force generation of documentation

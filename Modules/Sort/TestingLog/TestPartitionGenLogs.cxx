@@ -1,13 +1,13 @@
 /*===========================================================================================================
  *
- * SHA-L - Simple Hybesis Algorithm Logger
+ * HUL - Hurna Lib
  *
  * Copyright (c) Michael Jeulin-Lagarrigue
  *
  *  Licensed under the MIT License, you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
  *
- *         https://github.com/michael-jeulinl/Simple-Hybesis-Algorithms-Logger/blob/master/LICENSE
+ *         https://github.com/Hurna/Hurna-Lib/blob/master/LICENSE
  *
  * Unless required by applicable law or agreed to in writing, software distributed under the License is
  * distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -44,7 +44,7 @@ namespace
 TEST(TestPartitionGenLogs, RandomIntegers)
 {
   // Generate log for all Random integers
-  for (auto it = SHA_DATA::Integers.begin(); it != SHA_DATA::Integers.end(); ++it)
+  for (auto it = HUL_DATA::Integers.begin(); it != HUL_DATA::Integers.end(); ++it)
   {
     OFStream stream(DIR + "/" + it->first + ".json");
     auto logger = std::shared_ptr<Logger>(new Logger(stream));
@@ -123,7 +123,7 @@ TEST(TestPartitionGenLogs, ReversedChars)
 TEST(TestPartitionGenLogs, RandomChars)
 {
   // Generate log for all Random integers
-  for (auto it = SHA_DATA::Integers.begin(); it != SHA_DATA::Integers.end(); ++it)
+  for (auto it = HUL_DATA::Integers.begin(); it != HUL_DATA::Integers.end(); ++it)
   {
     auto size = it->second.size();
     if (size > 50)

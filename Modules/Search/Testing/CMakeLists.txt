@@ -18,7 +18,7 @@
 #
 #############################################################################################################
 
-set(SHA ${PROJECT_NAME})
+set(HUL ${PROJECT_NAME})
 
 # Source files
 set(MODULE_SEARCH_SRCS TestBinary.cxx

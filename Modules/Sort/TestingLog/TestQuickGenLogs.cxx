@@ -1,13 +1,13 @@
 /*===========================================================================================================
  *
- * SHA-L - Simple Hybesis Algorithm Logger
+ * HUL - Hurna Lib
  *
  * Copyright (c) Michael Jeulin-Lagarrigue
  *
  *  Licensed under the MIT License, you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
  *
- *         https://github.com/michael-jeulinl/Simple-Hybesis-Algorithms-Logger/blob/master/LICENSE
+ *         https://github.com/Hurna/Hurna-Lib/blob/master/LICENSE
  *
  * Unless required by applicable law or agreed to in writing, software distributed under the License is
  * distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -51,7 +51,7 @@ namespace
 TEST(TestQuickGenLogs, buildPRand)
 {
   // Generate log for all Random integers
-  for (auto it = SHA_DATA::Integers.begin(); it != SHA_DATA::Integers.end(); ++it)
+  for (auto it = HUL_DATA::Integers.begin(); it != HUL_DATA::Integers.end(); ++it)
   {
     OFStream stream(DIR + "/" + it->first + "_prand.json");
     auto logger = std::shared_ptr<Logger>(new Logger(stream));
@@ -99,7 +99,7 @@ TEST(TestQuickGenLogs, buildPFirst)
     OFStream stream(DIR + "/" + *dataStrIt + "_pfirst.json");
     auto logger = std::shared_ptr<Logger>(new Logger(stream));
 
-    auto dataIt = SHA_DATA::Integers.find(*dataStrIt);
+    auto dataIt = HUL_DATA::Integers.find(*dataStrIt);
     Array data(logger, dataIt->second);
 
     QuickFirst::Build(*logger.get(), data.h_begin(), data.h_end());
@@ -144,7 +144,7 @@ TEST(TestQuickGenLogs, buildPLast)
     OFStream stream(DIR + "/" + *dataStrIt + "_plast.json");
     auto logger = std::shared_ptr<Logger>(new Logger(stream));
 
-    auto dataIt = SHA_DATA::Integers.find(*dataStrIt);
+    auto dataIt = HUL_DATA::Integers.find(*dataStrIt);
     Array data(logger, dataIt->second);
 
     QuickFirst::Build(*logger.get(), data.h_begin(), data.h_end());
@@ -189,7 +189,7 @@ TEST(TestQuickGenLogs, buildPMiddle)
     OFStream stream(DIR + "/" + *dataStrIt + "_pmiddle.json");
     auto logger = std::shared_ptr<Logger>(new Logger(stream));
 
-    auto dataIt = SHA_DATA::Integers.find(*dataStrIt);
+    auto dataIt = HUL_DATA::Integers.find(*dataStrIt);
     Array data(logger, dataIt->second);
 
     QuickFirst::Build(*logger.get(), data.h_begin(), data.h_end());
@@ -234,7 +234,7 @@ TEST(TestQuickGenLogs, buildTmed)
     OFStream stream(DIR + "/" + *dataStrIt + "_ptmed.json");
     auto logger = std::shared_ptr<Logger>(new Logger(stream));
 
-    auto dataIt = SHA_DATA::Integers.find(*dataStrIt);
+    auto dataIt = HUL_DATA::Integers.find(*dataStrIt);
     Array data(logger, dataIt->second);
 
     QuickFirst::Build(*logger.get(), data.h_begin(), data.h_end());
@@ -296,7 +296,7 @@ TEST(TestQuickGenLogs, ReversedChars)
 TEST(TestQuickGenLogs, RandomChars)
 {
   // Generate log for all Random integers
-  for (auto it = SHA_DATA::Integers.begin(); it != SHA_DATA::Integers.end(); ++it)
+  for (auto it = HUL_DATA::Integers.begin(); it != HUL_DATA::Integers.end(); ++it)
   {
     auto size = it->second.size();
     if (size > 50)
