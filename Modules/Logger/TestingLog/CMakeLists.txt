@@ -18,8 +18,6 @@
 #
 #############################################################################################################
 
-set(SHA ${PROJECT_NAME})
-
 # Source files
 set(MODULE_LOGGER_SRCS TestAlgorithm.cxx
                        TestArray.cxx
@@ -33,4 +31,4 @@ set(MODULE_LOGGER_SRCS TestAlgorithm.cxx
 # --------------------------------------------------------------------------
 include_directories(${LIB_DIR})
 include_directories(${MODULES_DIR})
-cxx_gtest(TestModuleLogger "${MODULE_LOGGER_SRCS}" ${SHA_SRCS})
+cxx_gtest(TestModuleLogger "${MODULE_LOGGER_SRCS}" ${HUL_SRCS})

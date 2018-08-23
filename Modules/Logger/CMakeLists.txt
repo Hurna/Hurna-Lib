@@ -18,10 +18,10 @@
 #
 #############################################################################################################
 
-project(SHAModuleLogger)
+project(HULModuleLogger)
 
 # Source files
-set(SHA_SRCS "${CMAKE_CURRENT_SOURCE_DIR}")
+set(HUL_SRCS "${CMAKE_CURRENT_SOURCE_DIR}")
 
 # Testing Logs
 if(BUILD_TESTING_LOG)

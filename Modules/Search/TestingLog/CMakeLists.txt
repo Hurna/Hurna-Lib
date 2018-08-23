@@ -18,8 +18,6 @@
 #
 #############################################################################################################
 
-set(SHA ${PROJECT_NAME})
-
 include_directories(${MODULES_DIR})
 include_directories(${LIB_DIR})
 
@@ -30,7 +28,7 @@ if(BUILD_TESTING_LOG)
   set(MODULE_SEARCH_LOG_SRCS TestBinaryLog.cxx
                              TestKthOrderStatisticLog.cxx)
 
-  cxx_gtest(TestModuleSearchLog "${MODULE_SEARCH_LOG_SRCS}" ${SHA_SRCS})
+  cxx_gtest(TestModuleSearchLog "${MODULE_SEARCH_LOG_SRCS}" ${HUL_SRCS})
 endif()
 
 # --------------------------------------------------------------------------
@@ -43,5 +41,5 @@ if(BUILD_TESTING_GEN_LOGS)
   file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/binary)
   file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/order_statistic)
 
-  cxx_gtest(TestModuleSearchGenLogs "${MODULE_SEARCH_GEN_LOGS_SRCS}" ${SHA_SRCS})
+  cxx_gtest(TestModuleSearchGenLogs "${MODULE_SEARCH_GEN_LOGS_SRCS}" ${HUL_SRCS})
 endif()

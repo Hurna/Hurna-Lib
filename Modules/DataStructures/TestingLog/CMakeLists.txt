@@ -18,8 +18,6 @@
 #
 #############################################################################################################
 
-set(SHA ${PROJECT_NAME})
-
 # Source files
 set(MODULE_DS_LOG_SRCS TestMazeBinaryTreeLog.cxx
                        TestMazeDFSLog.cxx
@@ -33,4 +31,4 @@ set(MODULE_DS_LOG_SRCS TestMazeBinaryTreeLog.cxx
 # --------------------------------------------------------------------------
 include_directories(${MODULES_DIR})
 include_directories(${LIB_DIR})
-cxx_gtest(TestModuleDataStructuresLog "${MODULE_DS_LOG_SRCS}" ${SHA_SRCS})
+cxx_gtest(TestModuleDataStructuresLog "${MODULE_DS_LOG_SRCS}" ${HUL_SRCS})

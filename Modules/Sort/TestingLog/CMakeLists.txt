@@ -18,8 +18,6 @@
 #
 #############################################################################################################
 
-set(SHA ${PROJECT_NAME})
-
 include_directories(${MODULES_DIR})
 include_directories(${LIB_DIR})
 
@@ -35,7 +33,7 @@ if(BUILD_TESTING_LOG)
                            TestPartitionLog.cxx
                            TestQuickLog.cxx)
 
-  cxx_gtest(TestModuleSortLog "${MODULE_SORT_LOG_SRCS}" ${SHA_SRCS})
+  cxx_gtest(TestModuleSortLog "${MODULE_SORT_LOG_SRCS}" ${HUL_SRCS})
 endif()
 
 # --------------------------------------------------------------------------
@@ -58,5 +56,5 @@ if(BUILD_TESTING_GEN_LOGS)
   file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/partition)
   file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/quick)
 
-  cxx_gtest(TestModuleSortGenLogs "${MODULE_SORT_GEN_LOGS_SRCS}" ${SHA_SRCS})
+  cxx_gtest(TestModuleSortGenLogs "${MODULE_SORT_GEN_LOGS_SRCS}" ${HUL_SRCS})
 endif()

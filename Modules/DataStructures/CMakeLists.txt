@@ -18,10 +18,11 @@
 #
 #############################################################################################################
 
-project(SHAModuleDataStructures)
+project(HULModuleDataStructures)
 
 # Source files
-set(SHA_SRCS "${CMAKE_CURRENT_SOURCE_DIR}")
+set(HUC_SRCS "${CMAKE_CURRENT_SOURCE_DIR}")
+set(HUL_SRCS "${CMAKE_CURRENT_SOURCE_DIR}")
 
 # Testing
 if(BUILD_TESTING)
