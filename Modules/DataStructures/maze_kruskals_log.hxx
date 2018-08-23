@@ -1,13 +1,13 @@
 /*===========================================================================================================
  *
- * SHA-L - Simple Hybesis Algorithm Logger
+ * HUL - Hurna Lib
  *
  * Copyright (c) Michael Jeulin-Lagarrigue
  *
  *  Licensed under the MIT License, you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
  *
- *         https://github.com/michael-jeulinl/Simple-Hybesis-Algorithms-Logger/blob/master/LICENSE
+ *         https://github.com/Hurna/Hurna-Lib/blob/master/LICENSE
  *
  * Unless required by applicable law or agreed to in writing, software distributed under the License is
  * distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -35,7 +35,7 @@
 #include <set>
 #include <vector>
 
-namespace SHA_Logger
+namespace HUL_Logger
 {
   // Cell - Make it fully generic
   // CellInfo - Template parameter
