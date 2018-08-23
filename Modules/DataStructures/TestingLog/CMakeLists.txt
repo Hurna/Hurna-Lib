@@ -18,17 +18,40 @@
 #
 #############################################################################################################
 
-# Source files
-set(MODULE_DS_LOG_SRCS TestMazeBinaryTreeLog.cxx
-                       TestMazeDFSLog.cxx
-                       TestMazeKruskalsLog.cxx
-                       TestMazePrimsLog.cxx
-                       TestMazeRecursiveDivisionLog.cxx
-                       TestMazeSidewinderLog.cxx)
-
-# --------------------------------------------------------------------------
-# Build Testing Log executables
-# --------------------------------------------------------------------------
 include_directories(${MODULES_DIR})
 include_directories(${LIB_DIR})
-cxx_gtest(TestModuleDataStructuresLog "${MODULE_DS_LOG_SRCS}" ${HUL_SRCS})
+
+# --------------------------------------------------------------------------
+# Build Testing Log executables for simple testing
+# --------------------------------------------------------------------------
+if(BUILD_TESTING_LOG)
+  set(MODULE_DS_LOG_SRCS TestMazeBinaryTreeLog.cxx
+                         TestMazeDFSLog.cxx
+                         TestMazeKruskalsLog.cxx
+                         TestMazePrimsLog.cxx)
+                         #TestMazeRecursiveDivisionLog.cxx
+                         #TestMazeSidewinderLog.cxx)
+
+  cxx_gtest(TestModuleDataStructuresLog "${MODULE_DS_LOG_SRCS}" ${HUL_SRCS})
+endif()
+
+# --------------------------------------------------------------------------
+# Build Testing Log executables for the data logs generation
+# --------------------------------------------------------------------------
+if(BUILD_TESTING_GEN_LOGS)
+  set(MODULE_DS_GEN_LOGS_SRCS TestMazeBinaryTreeGenLogs.cxx
+                         TestMazeDFSGenLogs.cxx
+                         TestMazeKruskalsGenLogs.cxx
+                         TestMazePrimsGenLogs.cxx)
+                         #TestMazeRecursiveDivisionGenLogs.cxx
+                         #TestMazeSidewinderGenLogs.cxx)
+
+  file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/binary_tree)
+  file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/depth_first_search)
+  file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/kruskals)
+  file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/prims)
+  file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/recursive_division)
+  file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/sidewinder)
+
+  cxx_gtest(TestModuleDataStructuresGenLogs "${MODULE_DS_GEN_LOGS_SRCS}" ${HUL_SRCS})
+endif()

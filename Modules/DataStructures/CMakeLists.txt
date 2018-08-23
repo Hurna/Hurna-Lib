@@ -30,6 +30,6 @@ if(BUILD_TESTING)
 endif()
 
 # Testing Log
-if(BUILD_TESTING_LOG)
+if(BUILD_TESTING_LOG OR BUILD_TESTING_GEN_LOGS)
   add_subdirectory(TestingLog)
 endif()

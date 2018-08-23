@@ -26,25 +26,9 @@
 // Testing namespace
 using namespace HUL_Logger;
 
-#ifndef DOXYGEN_SKIP
-namespace {
-  std::vector<uint8_t> Widths = {5, 10, 20, 30, 50, 75};
-  std::vector<uint8_t> Seeds = {1, 2, 3, 4};
-}
-#endif /* DOXYGEN_SKIP */
-
 // Test TestAlgo Construction
 TEST(TestMazeBinaryTreeLog, build)
 {
-  // Generate log for all Random integers
-  for (auto seed = Seeds.begin(); seed != Seeds.end(); ++seed)
-    for (auto width = Widths.rbegin(); width != Widths.rend(); ++width)
-      for (auto height = width; std::distance(width, height) != 3 && height != Widths.rend(); ++height)
-      {
-        OFStream fileStream(std::string(
-                              ToString(*width) + "_" + ToString(*height) + "_" + ToString(*seed) + ".json"));
-
-        // Build Maze
-        MazeBinaryTreeLog::Build(fileStream, *width, *height, *seed);
-      }
+  std::stringstream dumpStream;
+  MazeBinaryTreeLog::Build(dumpStream, 5, 5);
 }

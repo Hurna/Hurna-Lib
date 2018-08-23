@@ -49,12 +49,9 @@ namespace HUL_Logger
 
     // Add a connection
     //
-    void AddConnection(std::shared_ptr<Cell> cell)
-    { this->connectedCells.insert(cell); }
-    std::set<std::weak_ptr<Cell>>& GetConnections()
-    { return this->connectedCells; }
-    void DisconnectCell(const std::shared_ptr<Cell>& cell)
-    { this->connectedCells.erase(cell); }
+    void AddConnection(std::shared_ptr<Cell> cell) { this->connectedCells.insert(cell); }
+    std::set<std::weak_ptr<Cell>>& GetConnections() { return this->connectedCells; }
+    void DisconnectCell(const std::shared_ptr<Cell>& cell) { this->connectedCells.erase(cell); }
 
     // @todo this information should not be part the cell info itself
     static const std::shared_ptr<Cell>& Visite(const std::shared_ptr<Cell>& cell, bool visite = true)

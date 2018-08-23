@@ -18,7 +18,7 @@
  *
  *=========================================================================================================*/
 #include <gtest/gtest.h>
-#include <maze_dfs_log.hxx>
+#include <maze_kruskals_log.hxx>
 
 // STD includes
 #include <fstream>
@@ -26,10 +26,25 @@
 // Testing namespace
 using namespace HUL_Logger;
 
+#ifndef DOXYGEN_SKIP
+namespace {
+  const std::string DIR = "kruskals";
+
+  std::vector<uint8_t> Widths = {5, 10, 20, 30, 50, 75};
+  std::vector<uint8_t> Seeds = {1, 2, 3, 4};
+}
+#endif /* DOXYGEN_SKIP */
 
 // Test TestAlgo Construction
-TEST(TestMazeDFSLog, build)
+TEST(TestMazeKruskalsTreeLog, build)
 {
-  std::stringstream dumpStream;
-  MazeDFSLog::Build(dumpStream, 5, 5);
+  // Generate log for all Random integers
+  for (auto seed = Seeds.begin(); seed != Seeds.end(); ++seed)
+    for (auto width = Widths.rbegin(); width != Widths.rend(); ++width)
+      for (auto height = width; std::distance(width, height) != 3 && height != Widths.rend(); ++height)
+      {
+        OFStream fileStream(DIR + "/" +
+                            ToString(*width) + "_" + ToString(*height) + "_" + ToString(*seed) + ".json");
+        MazeKruskalsLog::Build(fileStream, *width, *height, *seed);
+      }
 }
