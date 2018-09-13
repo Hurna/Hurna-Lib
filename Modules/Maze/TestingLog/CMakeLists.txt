@@ -25,21 +25,21 @@ include_directories(${LIB_DIR})
 # Build Testing Log executables for simple testing
 # --------------------------------------------------------------------------
 if(BUILD_TESTING_LOG)
-  set(MODULE_DS_LOG_SRCS TestMazeBinaryTreeLog.cxx
-                         TestMazeDFSLog.cxx
-                         TestMazeKruskalsLog.cxx
+  set(MODULE_DS_LOG_SRCS #TestMazeBinaryTreeLog.cxx
+    #TestMazeDFSLog.cxx
+     #                    TestMazeKruskalsLog.cxx
                          TestMazePrimsLog.cxx)
                          #TestMazeRecursiveDivisionLog.cxx
                          #TestMazeSidewinderLog.cxx)
 
-  cxx_gtest(TestModuleDataStructuresLog "${MODULE_DS_LOG_SRCS}" ${HUL_SRCS})
+  cxx_gtest(TestModuleMazeLog "${MODULE_DS_LOG_SRCS}" ${HUL_SRCS})
 endif()
 
 # --------------------------------------------------------------------------
 # Build Testing Log executables for the data logs generation
 # --------------------------------------------------------------------------
 if(BUILD_TESTING_GEN_LOGS)
-  set(MODULE_DS_GEN_LOGS_SRCS TestMazeBinaryTreeGenLogs.cxx
+  set(MODULE_DS_GEN_LOGS_SRCS #TestMazeBinaryTreeGenLogs.cxx
                          TestMazeDFSGenLogs.cxx
                          TestMazeKruskalsGenLogs.cxx
                          TestMazePrimsGenLogs.cxx)
@@ -53,5 +53,5 @@ if(BUILD_TESTING_GEN_LOGS)
   file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/recursive_division)
   file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/sidewinder)
 
-  cxx_gtest(TestModuleDataStructuresGenLogs "${MODULE_DS_GEN_LOGS_SRCS}" ${HUL_SRCS})
+  cxx_gtest(TestModuleMazeGenLogs "${MODULE_DS_GEN_LOGS_SRCS}" ${HUL_SRCS})
 endif()

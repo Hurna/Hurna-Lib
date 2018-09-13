@@ -18,7 +18,7 @@
  *
  *=========================================================================================================*/
 #include <gtest/gtest.h>
-#include <maze_prims_log.hxx>
+#include <prims_generator_log.hxx>
 
 // STD includes
 #include <fstream>

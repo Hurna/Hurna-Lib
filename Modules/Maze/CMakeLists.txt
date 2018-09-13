@@ -18,11 +18,12 @@
 #
 #############################################################################################################
 
-SET(MODULES_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+project(HULModuleMaze)
 
-add_subdirectory(Combinatory)
-add_subdirectory(Logger)
-add_subdirectory(Maze)
-add_subdirectory(Search)
-add_subdirectory(Sort)
-add_subdirectory(DataStructures)
+# Source files
+set(HUL_SRCS "${CMAKE_CURRENT_SOURCE_DIR}")
+
+# Testing Log
+if(BUILD_TESTING_LOG OR BUILD_TESTING_GEN_LOGS)
+  add_subdirectory(TestingLog)
+endif()

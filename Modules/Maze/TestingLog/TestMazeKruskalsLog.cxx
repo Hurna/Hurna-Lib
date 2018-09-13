@@ -18,7 +18,7 @@
  *
  *=========================================================================================================*/
 #include <gtest/gtest.h>
-#include <maze_sidewinder_log.hxx>
+#include <kruskals_generator_log.hxx>
 
 // STD includes
 #include <fstream>
@@ -26,10 +26,9 @@
 // Testing namespace
 using namespace HUL_Logger;
 
-
 // Test TestAlgo Construction
-TEST(TestMazeSidewinderLog, build)
+TEST(TestMazeKruskalsTreeLog, build)
 {
   std::stringstream dumpStream;
-  MazeSidewinderLog::Build(dumpStream, 5, 5);
+  MazeKruskalsLog::Build(dumpStream, 5, 5);
 }

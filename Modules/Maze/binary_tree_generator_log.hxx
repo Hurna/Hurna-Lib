@@ -17,8 +17,8 @@
  * substantial portions of the Software.
  *
  *=========================================================================================================*/
-#ifndef MODULE_DS_MAZE_BIN_LOG_HXX
-#define MODULE_DS_MAZE_BIN_LOG_HXX
+#ifndef MODULE_MAZE_BIN_GEN_LOG_HXX
+#define MODULE_MAZE_BIN_GEN_LOG_HXX
 
 #include <Logger/algorithm.hxx>
 #include <Logger/array.hxx>
@@ -36,8 +36,10 @@
 
 #include <iostream>
 
-namespace HUL_Logger
+namespace hul
 {
+  namespace maze
+  {
   class Cell {
   public:
     Cell() : x(0), y(0) {}
@@ -64,32 +66,25 @@ namespace HUL_Logger
 
   /// @class MazeBinaryTreeLog
   ///
-  class MazeBinaryTreeLog
+  class BinaryTree
   {
     public:
       static const String GetName() { return "Binary Tree Maze Generator"; }
+      static const String GetVersion() { return "1.0.0"; }
+      static const String GetType() { return "algorithm"; }
 
-      // Assert correct JSON construction.
-      ~MazeBinaryTreeLog() { assert(this->writer->IsComplete()); }
-
-      /// Instantiate a new json writer using the stream passed as
-      /// argument, run and write algorithm computation information.
       ///
-      /// @return stream reference filled up with MazeBinaryTreeLog object information,
-      ///         error object information in case of failure.
       static Ostream& Build(Ostream& os, const uint8_t width, const uint8_t height, const uint8_t seed = 0)
       {
-        auto builder = std::unique_ptr<MazeBinaryTreeLog>(new MazeBinaryTreeLog(os));
+        auto builder = std::unique_ptr<BinaryTree>(new MazeBinaryTreeLog(os));
         builder->Write(width, height, seed);
 
         return os;
       }
 
-      /// Use json writer passed as parameter to write iterator information.
       ///
-      /// @return stream reference filled up with MazeBinaryTreeLog object information,
-      ///         error information in case of failure.
-      static Writer& Build(Writer& writer, const uint8_t width, const uint8_t height, const uint8_t seed = 0)
+      static std::unique_ptr<Grid>&
+      Build(Writer& writer, const uint8_t width, const uint8_t height, const uint8_t seed = 0)
       {
         Write(writer, width, height, seed);
 
@@ -97,9 +92,9 @@ namespace HUL_Logger
       }
 
     private:
-      MazeBinaryTreeLog(Ostream& os) : stream(std::unique_ptr<Stream>(new Stream(os))),
-                                       writer(std::unique_ptr<Writer>(new Writer(*this->stream))) {}
-      MazeBinaryTreeLog operator=(MazeBinaryTreeLog&) = delete; // Not Implemented
+      BinaryTree(Ostream& os) : stream(std::unique_ptr<Stream>(new Stream(os))),
+                                writer(std::unique_ptr<Writer>(new Writer(*this->stream))) {}
+      BinaryTree operator=(BinaryTree&) = delete; // Not Implemented
 
       bool Write(const uint8_t width, const uint8_t height, const uint8_t seed)
       { return Write(*this->writer, width, height, seed); }
@@ -255,6 +250,7 @@ namespace HUL_Logger
       std::unique_ptr<Stream> stream; // Stream wrapper
       std::unique_ptr<Writer> writer; // Writer used to fill the stream
   };
+  }
 }
 
-#endif // MODULE_DS_MAZE_BIN_LOG_HXX
+#endif // MODULE_MAZE_BIN_GEN_LOG_HXX

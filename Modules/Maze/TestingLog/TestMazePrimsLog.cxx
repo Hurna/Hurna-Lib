@@ -18,7 +18,7 @@
  *
  *=========================================================================================================*/
 #include <gtest/gtest.h>
-#include <maze_recursive_division_log.hxx>
+#include <prims_generator_log.hxx>
 
 // STD includes
 #include <fstream>
@@ -27,8 +27,8 @@
 using namespace HUL_Logger;
 
 // Test TestAlgo Construction
-TEST(TestMazeRecursiveDivisionLog, build)
+TEST(TestMazePrimsLog, build)
 {
   std::stringstream dumpStream;
-  MazeRecursiveDivisionLog::Build(dumpStream, 5, 5);
+  MazePrimsLog::Build(dumpStream, 5, 5);
 }

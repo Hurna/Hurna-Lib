@@ -22,14 +22,8 @@ project(HULModuleDataStructures)
 
 # Source files
 set(HUC_SRCS "${CMAKE_CURRENT_SOURCE_DIR}")
-set(HUL_SRCS "${CMAKE_CURRENT_SOURCE_DIR}")
 
 # Testing
 if(BUILD_TESTING)
   add_subdirectory(Testing)
-endif()
-
-# Testing Log
-if(BUILD_TESTING_LOG OR BUILD_TESTING_GEN_LOGS)
-  add_subdirectory(TestingLog)
 endif()

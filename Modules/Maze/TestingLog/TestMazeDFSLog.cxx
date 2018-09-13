@@ -18,7 +18,7 @@
  *
  *=========================================================================================================*/
 #include <gtest/gtest.h>
-#include <maze_binary_tree_log.hxx>
+#include <dfs_generator_log.hxx>
 
 // STD includes
 #include <fstream>
@@ -26,9 +26,10 @@
 // Testing namespace
 using namespace HUL_Logger;
 
+
 // Test TestAlgo Construction
-TEST(TestMazeBinaryTreeLog, build)
+TEST(TestMazeDFSLog, build)
 {
   std::stringstream dumpStream;
-  MazeBinaryTreeLog::Build(dumpStream, 5, 5);
+  MazeDFSLog::Build(dumpStream, 5, 5);
 }

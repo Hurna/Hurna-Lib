@@ -18,7 +18,7 @@
  *
  *=========================================================================================================*/
 #include <gtest/gtest.h>
-#include <maze_binary_tree_log.hxx>
+#include <dfs_generator_log.hxx>
 
 // STD includes
 #include <fstream>
@@ -28,24 +28,45 @@ using namespace HUL_Logger;
 
 #ifndef DOXYGEN_SKIP
 namespace {
-  const std::string DIR = "binary_tree";
+  const std::string DIR = "depth_first_search";
 
   std::vector<uint8_t> Widths = {5, 10, 20, 30, 50, 75};
-  std::vector<uint8_t> Seeds = {1, 2, 3, 4};
 }
 #endif /* DOXYGEN_SKIP */
 
 // Test TestAlgo Construction
-TEST(TestMazeBinaryTreeLog, build)
+TEST(TestMazeDFSLog, build)
 {
-  // Generate log for all Random integers
-  for (auto seed = Seeds.begin(); seed != Seeds.end(); ++seed)
+  // Generate mazes with startCell = {TopLeft, Middle, BottomRight}
+  for (u_int8_t cellId = 0; cellId != 3; ++cellId)
     for (auto width = Widths.rbegin(); width != Widths.rend(); ++width)
       for (auto height = width; std::distance(width, height) != 3 && height != Widths.rend(); ++height)
       {
-        OFStream
-          fileStream(DIR + "/" +
-                     ToString(*width) + "_" + ToString(*height) + "_" + ToString(*seed) + ".json");
-        MazeBinaryTreeLog::Build(fileStream, *width, *height, *seed);
+        std::pair<uint8_t, uint8_t> startCell;
+        std::string cellIdStr;
+
+        switch (cellId) {
+          case 0:
+            startCell.first = 0;
+            startCell.second = 0;
+            cellIdStr = "TL";
+            break;
+          case 1:
+            startCell.first = *width / 2;
+            startCell.second = *height / 2;
+            cellIdStr = "M";
+            break;
+          case 2:
+            startCell.first = *width - 1;
+            startCell.second = *height - 1;
+            cellIdStr = "BR";
+            break;
+          default:
+            break;
+        }
+
+        OFStream fileStream(DIR + "/" +
+                            ToString(*width) + "_" + ToString(*height) + "_" + cellIdStr + ".json");
+        MazeDFSLog::Build(fileStream, *width, *height, startCell);
       }
 }
