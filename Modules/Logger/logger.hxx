@@ -38,6 +38,8 @@ namespace hul
 
     void AddEntry(const String& key, const String& value)
     {
+      if (value.empty()) return;
+
       writer->Key(key);
       writer->String(value);
     }
@@ -71,12 +73,16 @@ namespace hul
     template <typename T>
     void AddObject(const T& object, bool isConst=false) { object.Log(isConst); }
 
+    template <typename T>
+    void AddObjectV2(const T& object, bool isConst=false, const String& name="")
+    { object.Log(*this, isConst, name); }
+
     template <typename IT>
     void AddData(const IT& begin, const IT& end, const String& key = "")
     {
       if (!key.empty()) writer->Key(key);
 
-      StarArray();
+      StartArray();
         for (auto it = begin; it != end; ++it) Add(*it);
       EndArray();
     }
@@ -152,14 +158,11 @@ namespace hul
       EndObject();
     }
 
-
-
-    void StartArray(const String& key)
+    void StartArray(const String& key = "")
     {
-      writer->Key(key);
+      if (!key.empty()) writer->Key(key);
       writer->StartArray();
     }
-    void StarArray() { writer->StartArray(); }
     void EndArray() { writer->EndArray(); }
 
     void StartObject(const String& key = "")
@@ -185,7 +188,13 @@ namespace hul
     int GetCurrentLevel() const { return currentLevel; }
 
     // Specifications
-    void Add(bool value)          { writer->Bool(value); }
+    void Add(const bool value)          { writer->Bool(value); }
+    void Add(const String& key, const bool value)
+    {
+      writer->Key(key);
+      writer->Bool(value);
+    }
+
     void Add(double value)        { writer->Double(value); }
     void Add(char value)          { writer->String(String(1, value)); }
     void Add(int value)           { writer->Int(value); }

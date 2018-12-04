@@ -18,19 +18,23 @@
  *
  *=========================================================================================================*/
 #include <gtest/gtest.h>
-#include <dfs_generator_log.hxx>
+#include <grid.hxx>
 
 // STD includes
 #include <fstream>
+#include <string>
 
-// H.urna namespaces
 using namespace hul;
-using namespace hul::maze;
 
-// Test TestAlgo Construction
-TEST(TestMazeDFSLog, build)
+#ifndef DOXYGEN_SKIP
+namespace {}
+#endif /* DOXYGEN_SKIP */
+
+// Test Grid
+TEST(TestGrid, constructor)
 {
-  //std::stringstream dumpStream;
-  OFStream dumpStream("depth_first_search/newMazeDef.json");
-  DFSGenerator::Build(dumpStream, 5, 5);
+  // Has to be linked to a stream otherwise useless to use
+  // Can still use its normal iterators to handle unlogged operations
+  OFStream fileStream("grid_log.json");
+  Grid<int> (fileStream, 10, 10);
 }

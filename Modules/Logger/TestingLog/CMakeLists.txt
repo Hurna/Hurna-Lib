@@ -21,6 +21,7 @@
 # Source files
 set(MODULE_LOGGER_SRCS TestAlgorithm.cxx
                        TestArray.cxx
+                       TestGrid.cxx
                        TestIterator.cxx
                        TestVector.cxx
                        #TestValueType.cxx

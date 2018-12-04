@@ -25,6 +25,7 @@
 // STD includes
 #include <iterator>
 #include <memory>
+#include <stdint.h>
 #include <vector>
 
 namespace hul
@@ -36,7 +37,8 @@ namespace hul
   class Vector
   {
     public:
-    static const String GetType() { return "array"; }
+    static const String GetName() { return "array"; }
+    static const String GetType() { return "data_structure"; }
     static const String GetVersion() { return "1.0.0"; }
 
     // Vector and Vector::h_iterator Statistics
@@ -413,18 +415,23 @@ namespace hul
       // Preserve normal iterator accesses
       typename std::vector<T>::iterator begin() { return this->data.begin(); }
       typename std::vector<T>::iterator end() { return this->data.end(); }
-
       const typename std::vector<T>::iterator cbegin() const { return this->data.cbegin(); }
       const typename std::vector<T>::iterator cend() const { return this->data.cend(); }
-
-      void push_back (const T& val) { this->data.push_back(val); }
-      void reserve (size_t n) { this->data.reserve(n); }
-      const size_t size() const { return this->data.size(); }
-
 
       // Observale iterator
       h_iterator h_begin() { return h_iterator(data.begin(), this, static_cast<int>(0), "begin"); }
       h_iterator h_end() { return h_iterator(data.end(), this, static_cast<int>(data.size()), "end"); }
+
+      // Function wrapping
+      void push_back (const T& val) { this->data.push_back(val); }
+      void reserve (size_t n) { this->data.reserve(n); }
+      size_t size() const { return this->data.size(); }
+
+      T& operator[] (size_t n) { return this->data[n]; }
+      const T& operator[] (size_t n) const { return this->data[n]; }
+
+
+
 
       ///
       /// \brief Log
