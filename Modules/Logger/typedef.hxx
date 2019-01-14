@@ -23,49 +23,16 @@
 // JSON lib includes
 #include <rapidjson/ostreamwrapper.h>
 #include <rapidjson/prettywriter.h>
-#include <rapidjson/pointer.h>
-
 
 // STD includes
 #include <sstream>
 #include <string>
 
-namespace HUL_Logger
+namespace hul
 {
   typedef rapidjson::OStreamWrapper Stream;
   //typedef rapidjson::PrettyWriter<Stream> Writer;
   typedef rapidjson::Writer<Stream> Writer;
-
-  // STD typedef
-  typedef const std::string String;
-  typedef std::ostream Ostream;
-  typedef std::ofstream OFStream;
-
-  // String value
-  template<typename T>
-  typename std::enable_if<std::is_fundamental<T>::value, std::string>::type ToString(const T& t)
-  { return std::to_string(t); }
-
-  template<>
-  inline std::string ToString<char>(const char& t)
-  { return std::string(1, t); }
-
-  template<class T>
-  typename std::enable_if<!std::is_fundamental<T>::value, std::string>::type ToString(const T& t)
-  { return std::string(t); }
-
-  // Range To String
-  /// @todo tuple to make it more generic
-  template<class Pair>
-  inline std::string RangeToString(const Pair& range)
-  { return "[" + ToString(range.first) + ", " + ToString(range.second) + "]"; }
-}
-
-namespace hul
-{
-  typedef rapidjson::OStreamWrapper Stream;
-  typedef rapidjson::PrettyWriter<Stream> Writer;
-  //typedef rapidjson::Writer<Stream> Writer;
 
   // STD typedef
   typedef std::string String;

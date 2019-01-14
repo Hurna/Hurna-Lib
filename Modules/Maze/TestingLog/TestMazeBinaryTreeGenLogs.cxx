@@ -23,8 +23,9 @@
 // STD includes
 #include <fstream>
 
-// Testing namespace
-using namespace HUL_Logger;
+// H.urna namespaces
+using namespace hul;
+using namespace hul::maze;
 
 #ifndef DOXYGEN_SKIP
 namespace {
@@ -46,6 +47,6 @@ TEST(TestMazeBinaryTreeLog, build)
         OFStream
           fileStream(DIR + "/" +
                      ToString(*width) + "_" + ToString(*height) + "_" + ToString(*seed) + ".json");
-        MazeBinaryTreeLog::Build(fileStream, *width, *height, *seed);
+        BinaryGenerator::Build(fileStream, *width, *height, *seed);
       }
 }

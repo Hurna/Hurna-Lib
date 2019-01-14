@@ -18,18 +18,19 @@
  *
  *=========================================================================================================*/
 #include <gtest/gtest.h>
-#include <sidewinder_generator_generator_log.hxx>
+#include <sidewinder_generator_log.hxx>
 
 // STD includes
 #include <fstream>
 
-// Testing namespace
-using namespace HUL_Logger;
+// H.urna namespaces
+using namespace hul;
+using namespace hul::maze;
 
 
 // Test TestAlgo Construction
 TEST(TestMazeSidewinderLog, build)
 {
   std::stringstream dumpStream;
-  MazeSidewinderLog::Build(dumpStream, 5, 5);
+  SidewinderGenerator::Build(dumpStream, 5, 5);
 }

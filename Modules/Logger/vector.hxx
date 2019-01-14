@@ -415,8 +415,12 @@ namespace hul
       // Preserve normal iterator accesses
       typename std::vector<T>::iterator begin() { return this->data.begin(); }
       typename std::vector<T>::iterator end() { return this->data.end(); }
+      typename std::vector<T>::iterator rbegin() { return this->data.rbegin(); }
+      typename std::vector<T>::iterator rend() { return this->data.rend(); }
       const typename std::vector<T>::iterator cbegin() const { return this->data.cbegin(); }
       const typename std::vector<T>::iterator cend() const { return this->data.cend(); }
+      const typename std::vector<T>::iterator crbegin() const { return this->data.crbegin(); }
+      const typename std::vector<T>::iterator crend() const { return this->data.crend(); }
 
       // Observale iterator
       h_iterator h_begin() { return h_iterator(data.begin(), this, static_cast<int>(0), "begin"); }

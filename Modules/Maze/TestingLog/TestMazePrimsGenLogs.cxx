@@ -23,18 +23,18 @@
 // STD includes
 #include <fstream>
 
-// Testing namespace
-using namespace HUL_Logger;
+// H.urna namespaces
+using namespace hul;
+using namespace hul::maze;
 
 #ifndef DOXYGEN_SKIP
 namespace {
   const std::string DIR = "prims";
-
   std::vector<uint8_t> Widths = {5, 10, 20, 30, 50, 75};
 }
 #endif /* DOXYGEN_SKIP */
 
-// Test TestAlgo Construction
+// Generate log files
 TEST(TestMazePrimsLog, build)
 {
   // Generate mazes with startCell = {TopLeft, Middle, BottomRight}
@@ -42,23 +42,23 @@ TEST(TestMazePrimsLog, build)
     for (auto width = Widths.rbegin(); width != Widths.rend(); ++width)
       for (auto height = width; std::distance(width, height) != 3 && height != Widths.rend(); ++height)
       {
-        std::pair<uint8_t, uint8_t> startCell;
+        PrimsGenerator::Point startPoint;
         std::string cellIdStr;
 
         switch (cellId) {
           case 0:
-            startCell.first = 0;
-            startCell.second = 0;
+            startPoint.x = 0;
+            startPoint.y = 0;
             cellIdStr = "TL";
             break;
           case 1:
-            startCell.first = (*width / 2) - 1;
-            startCell.second = (*height / 2) - 1;
+            startPoint.x = (*width / 2) - 1;
+            startPoint.y = (*height / 2) - 1;
             cellIdStr = "M";
             break;
           case 2:
-            startCell.first = *width - 1;
-            startCell.second = *height - 1;
+            startPoint.x = *width - 1;
+            startPoint.y = *height - 1;
             cellIdStr = "BR";
             break;
           default:
@@ -67,6 +67,6 @@ TEST(TestMazePrimsLog, build)
 
         OFStream
           fileStream(DIR + "/" + ToString(*width) + "_" + ToString(*height) + "_" + cellIdStr + ".json");
-        MazePrimsLog::Build(fileStream, *width, *height, startCell);
+        PrimsGenerator::Build(fileStream, *width, *height, startPoint);
       }
 }

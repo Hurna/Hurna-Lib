@@ -20,7 +20,7 @@
 #include <gtest/gtest.h>
 #include <algorithm.hxx>
 
-using namespace HUL_Logger;
+using namespace hul;
 
 #ifndef DOXYGEN_SKIP
 namespace {

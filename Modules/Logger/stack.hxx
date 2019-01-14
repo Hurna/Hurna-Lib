@@ -40,7 +40,7 @@ namespace hul
     static const String GetType() { return "data_structure"; }
     static const String GetVersion() { return "1.0.0"; }
 
-    // Stack and Stack::h_iterator Statistics
+    // Statistics
     struct Stats
     {
       Stats() : maxSize(0), nbAccess(0), nbPop(0), nbPush(0), nbSwap(0) {}
@@ -138,8 +138,8 @@ namespace hul
     std::shared_ptr<Logger> logger; // Logger
     std::stack<T> data;             // Stack wrapper
     const String name;              // Identifiant name
-    const String id;               // Internal identifiant (memory address)
+    const String id;                // Internal identifiant (memory address)
     mutable Stats stats;            // Computation statistics
   };
 }
-#endif // MODULE_LOGGER_Stack_HXX
+#endif // MODULE_LOGGER_STACK_HXX

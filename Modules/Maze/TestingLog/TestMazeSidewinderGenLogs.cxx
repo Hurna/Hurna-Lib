@@ -18,16 +18,18 @@
  *
  *=========================================================================================================*/
 #include <gtest/gtest.h>
-#include <sidewinder_generator_generator_log.hxx>
+#include <sidewinder_generator_log.hxx>
 
 // STD includes
 #include <fstream>
 
-// Testing namespace
-using namespace HUL_Logger;
+// H.urna namespaces
+using namespace hul;
+using namespace hul::maze;
 
 #ifndef DOXYGEN_SKIP
 namespace {
+  const std::string DIR = "sidewinder";
   std::vector<uint8_t> Widths = {5, 10, 20, 30, 50, 75};
   std::vector<uint8_t> Seeds = {1, 2, 3, 4};
 }
@@ -41,10 +43,10 @@ TEST(TestMazeSidewinderLog, build)
     for (auto width = Widths.rbegin(); width != Widths.rend(); ++width)
       for (auto height = width; std::distance(width, height) != 3 && height != Widths.rend(); ++height)
       {
-        OFStream fileStream(std::string(
-                              ToString(*width) + "_" + ToString(*height) + "_" + ToString(*seed) + ".json"));
+        OFStream fileStream
+          (DIR + "/" + ToString(*width) + "_" + ToString(*height) + "_" + ToString(*seed) + ".json");
 
         // Build Maze
-        MazeSidewinderLog::Build(fileStream, *width, *height, *seed);
+        SidewinderGenerator::Build(fileStream, *width, *height, *seed);
       }
 }

@@ -23,8 +23,9 @@
 // STD includes
 #include <fstream>
 
-// Testing namespace
-using namespace HUL_Logger;
+// H.urna namespaces
+using namespace hul;
+using namespace hul::maze;
 
 #ifndef DOXYGEN_SKIP
 namespace {
@@ -45,6 +46,6 @@ TEST(TestMazeKruskalsTreeLog, build)
       {
         OFStream fileStream(DIR + "/" +
                             ToString(*width) + "_" + ToString(*height) + "_" + ToString(*seed) + ".json");
-        MazeKruskalsLog::Build(fileStream, *width, *height, *seed);
+        KruskalsGenerator::Build(fileStream, *width, *height, *seed);
       }
 }

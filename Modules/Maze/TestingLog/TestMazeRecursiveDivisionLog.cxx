@@ -18,17 +18,18 @@
  *
  *=========================================================================================================*/
 #include <gtest/gtest.h>
-#include <recursive_division_generator_generator_log.hxx>
+#include <recursive_division_generator_log.hxx>
 
 // STD includes
 #include <fstream>
 
-// Testing namespace
-using namespace HUL_Logger;
+// H.urna namespaces
+using namespace hul;
+using namespace hul::maze;
 
 // Test TestAlgo Construction
 TEST(TestMazeRecursiveDivisionLog, build)
 {
   std::stringstream dumpStream;
-  MazeRecursiveDivisionLog::Build(dumpStream, 5, 5);
+  RecursiveDivisionGenerator::Build(dumpStream, 5, 5);
 }

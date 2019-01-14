@@ -20,9 +20,10 @@
 #ifndef MODULE_LOGGER_GRID_HXX
 #define MODULE_LOGGER_GRID_HXX
 
+// STD
+#include <set>
+
 #include <Logger/vector.hxx>
-// @todo delete once H.urna stack
-#include <stack>
 
 namespace hul
 {
@@ -45,14 +46,16 @@ namespace hul
     static const String GetType() { return "data_structure"; }
     static const String GetVersion() { return "1.0.0"; }
 
-    explicit Grid(Ostream& os, uint8_t width, uint8_t height, const String& name = "") :
+    explicit Grid
+      (Ostream& os, uint8_t width, uint8_t height, bool isConnected = false, const String& name = "") :
       logger(std::shared_ptr<Logger>(new Logger(os))),
       data(logger), name(name), id(ToString(static_cast<void*>(this)))
-    { Init(width, height); }
+    { Init(width, height, isConnected); }
 
-    explicit Grid(std::shared_ptr<Logger> logger, uint8_t width, uint8_t height, const String& name = "") :
+    explicit Grid(std::shared_ptr<Logger> logger,
+                  uint8_t width, uint8_t height,  bool isConnected = false, const String& name = "") :
       logger(logger), data(logger), name(name), id(ToString(static_cast<void*>(this)))
-    { Init(width, height); }
+    { Init(width, height, isConnected); }
 
     // Members
     const String name;  // Identifiant name
@@ -73,6 +76,14 @@ namespace hul
           logger.AddEntry("y", this->y);
         logger.EndObject();
       }
+
+      void LogInfo(Logger& logger, const String& name = "") const
+      {
+        logger.StartObject(name);
+          logger.AddEntry("x", this->x);
+          logger.AddEntry("y", this->y);
+        logger.EndObject();
+      }
     };
 
     class Cell {
@@ -85,11 +96,26 @@ namespace hul
       const uint8_t x; // X coordinate
       const uint8_t y; // Y coordinate
 
-      std::vector<String> connectedCells;  // Directed connections from this cell
-      CellInfo info;                       // Use to store extra information
+      std::set<String> connectedCells;  // Directed connections from this cell
+      CellInfo info;                    // Use to store extra information
 
     private:
       Cell operator=(Cell&); // Not Implemented
+    };
+
+    class Edge {
+    public:
+      static const String GetName() { return "edge"; }
+
+      Edge(std::shared_ptr<Cell> first, std::shared_ptr<Cell> second) :
+        id(ToString(static_cast<void*>(this))), first(first), second(second) {}
+
+      const String id; // Internal identifiant (memory address)
+      const std::shared_ptr<Cell> first; // X coordinate
+      const std::shared_ptr<Cell> second; // Y coordinate
+
+    private:
+      Edge operator=(Edge&); // Not Implemented
     };
 
     struct Stats
@@ -99,20 +125,23 @@ namespace hul
       int nbConnexion;
     };
 
-    void Connect(const std::shared_ptr<Cell> cellA, const std::shared_ptr<Cell> cellB)
+    void Connect(const std::shared_ptr<Cell> root, const std::shared_ptr<Cell> cell, bool mute = false)
     {
-      cellA->connectedCells.push_back(cellB->id);
-      cellB->connectedCells.push_back(cellA->id);
+      root->connectedCells.insert(cell->id);
+      cell->connectedCells.insert(root->id);
       this->stats.nbConnexion += 2;
 
-      logger->StartObject();
-        logger->AddEntry("type", "operation");
-        logger->AddEntry("name", "Connect");
-        logger->StartArray("cells");
-          logger->Add(cellA->id);
-          logger->Add(cellB->id);
-        logger->EndArray();
-      logger->EndObject();
+      if (!mute)
+      {
+        logger->StartObject();
+          logger->AddEntry("type", "operation");
+          logger->AddEntry("name", "Connect");
+          logger->AddEntry("root", root->id);
+          logger->StartArray("cells");
+            logger->Add(cell->id);
+          logger->EndArray();
+        logger->EndObject();
+      }
     }
 
     void Connect(const std::shared_ptr<Cell> cell, const std::vector<std::shared_ptr<Cell>>& neighbours)
@@ -128,11 +157,72 @@ namespace hul
           for (auto it = neighbours.begin(); it != neighbours.end(); ++it)
           {
             logger->Add((*it)->id);
-            cell->connectedCells.push_back((*it)->id);
-            (*it)->connectedCells.push_back(cell->id);
+            cell->connectedCells.insert((*it)->id);
+            (*it)->connectedCells.insert(cell->id);
             this->stats.nbConnexion += 2;
           }
         logger->EndArray();
+      logger->EndObject();
+    }
+
+    void Disconnect(const std::shared_ptr<Cell> root, const std::shared_ptr<Cell> cell, bool mute = false)
+    {
+      root->connectedCells.erase(cell->id);
+      cell->connectedCells.erase(root->id);
+      this->stats.nbConnexion -= 2;
+
+      if (!mute)
+      {
+        logger->StartObject();
+          logger->AddEntry("type", "operation");
+          logger->AddEntry("name", "Disconnect");
+          logger->AddEntry("root", root->id);
+          logger->StartArray("cells");
+            logger->Add(cell->id);
+          logger->EndArray();
+        logger->EndObject();
+      }
+    }
+
+    void DisconnectCol(const Point& origin, const u_int8_t idx, const u_int8_t height, const uint8_t pathIdx)
+    {
+      for (auto y = 0; y < height; ++y)
+      {
+        if (y == pathIdx)
+          continue;
+
+        this->Disconnect(this->data[origin.x + idx][origin.y + y],
+                         this->data[origin.x + idx + 1][origin.y + y], true);
+      }
+
+      logger->StartObject();
+        logger->AddEntry("type", "operation");
+        logger->AddEntry("name", "DisconnectCol");
+        origin.LogInfo(*this->logger.get(), "origin");
+        logger->AddEntry("size", height);
+        logger->AddEntry("idx", idx);
+        logger->AddEntry("pathIdx", pathIdx);
+      logger->EndObject();
+    }
+
+    void DisconnectRow(const Point& origin, const u_int8_t idx, const u_int8_t width, const uint8_t pathIdx)
+    {
+      for (auto x = 0; x < width; ++x)
+      {
+        if (x == pathIdx)
+          continue;
+
+        this->Disconnect(this->data[origin.x + x][origin.y + idx],
+                         this->data[origin.x + x][origin.y + idx + 1], true);
+      }
+
+      logger->StartObject();
+        logger->AddEntry("type", "operation");
+        logger->AddEntry("name", "DisconnectRow");
+        origin.LogInfo(*this->logger.get(), "origin");
+        logger->AddEntry("size", width);
+        logger->AddEntry("idx", idx);
+        logger->AddEntry("pathIdx", pathIdx);
       logger->EndObject();
     }
 
@@ -170,12 +260,31 @@ namespace hul
                 logger->AddEntry("y", curCell->y);
                 logger->AddEntry("rootDistance", curCell->info.rootDistance);
                 logger->StartArray("connectedCells");
-                  for (auto it = curCell->connectedCells.begin(); it < curCell->connectedCells.end(); ++it)
+                  for (auto it = curCell->connectedCells.begin(); it != curCell->connectedCells.end(); ++it)
                     logger->Add(*it);
                 logger->EndArray();
               logger->EndObject();
             }
 
+        logger->EndObject();
+      logger->EndObject();
+    }
+
+    ///
+    /// \brief LogInfo
+    ///
+    void LogStats(const String& name = "") const
+    {
+      logger->StartObject(name);
+        logger->AddEntry("type", GetType());
+        logger->AddEntry("dataType", Cell::GetName());
+        logger->AddEntry("name", GetName());
+        logger->AddEntry("id", this->id);
+        logger->AddEntry("alias", this->name);
+
+        logger->StartObject("stats");
+          logger->AddEntry("nbCell", Width() * Height());
+          logger->AddEntry("nbConnexion", this->stats.nbConnexion);
         logger->EndObject();
       logger->EndObject();
     }
@@ -195,6 +304,16 @@ namespace hul
       return cell;
     }
 
+    void SelectEdge(const std::shared_ptr<Cell> first, const std::shared_ptr<Cell> second) const
+    {
+      logger->StartObject();
+        logger->AddEntry("type", "operation");
+        logger->AddEntry("name", "SelectEdge");
+        logger->AddEntry("first", first->id);
+        logger->AddEntry("second", second->id);
+      logger->EndObject();
+    }
+
     uint8_t Width() const { return data.size(); }
     uint8_t Height() const { return (data.size() > 0) ? data[0].size() : 0; }
 
@@ -209,7 +328,7 @@ namespace hul
     Vector<Vector<std::shared_ptr<Cell>>> data; // Grid wrapper
     mutable Stats stats;                        // Computation statistics
 
-    void Init(uint8_t width, uint8_t height)
+    void Init(uint8_t width, uint8_t height, bool isConneccted)
     {
       // Generate the Grid
       this->data.reserve(width);
@@ -218,7 +337,17 @@ namespace hul
         this->data.push_back(Vector<std::shared_ptr<Cell>>(this->logger));
         this->data[x].reserve(height);
         for (uint8_t y = 0; y < height; ++y)
+        {
           this->data[x].push_back(std::shared_ptr<Cell>(new Cell(x, y)));
+
+          // Connect West
+          if (isConneccted && x > 0)
+            this->Connect(this->data[x][y], this->data[x-1][y], true);
+
+          // Connect North
+          if (isConneccted && y > 0)
+            this->Connect(this->data[x][y], this->data[x][y-1], true);
+        }
       }
     }
   };

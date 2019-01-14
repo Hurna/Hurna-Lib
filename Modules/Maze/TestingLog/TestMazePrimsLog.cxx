@@ -23,12 +23,13 @@
 // STD includes
 #include <fstream>
 
-// Testing namespace
-using namespace HUL_Logger;
+// H.urna namespaces
+using namespace hul;
+using namespace hul::maze;
 
 // Test TestAlgo Construction
 TEST(TestMazePrimsLog, build)
 {
   std::stringstream dumpStream;
-  MazePrimsLog::Build(dumpStream, 5, 5);
+  PrimsGenerator::Build(dumpStream, 5, 5);
 }

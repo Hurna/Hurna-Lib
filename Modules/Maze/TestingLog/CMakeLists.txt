@@ -25,12 +25,12 @@ include_directories(${LIB_DIR})
 # Build Testing Log executables for simple testing
 # --------------------------------------------------------------------------
 if(BUILD_TESTING_LOG)
-  set(MODULE_DS_LOG_SRCS #TestMazeBinaryTreeLog.cxx
-    #TestMazeDFSLog.cxx
-     #                    TestMazeKruskalsLog.cxx
-                         TestMazePrimsLog.cxx)
-                         #TestMazeRecursiveDivisionLog.cxx
-                         #TestMazeSidewinderLog.cxx)
+  set(MODULE_DS_LOG_SRCS TestMazeBinaryTreeLog.cxx
+                         TestMazeDFSLog.cxx
+                         TestMazeKruskalsLog.cxx
+                         TestMazePrimsLog.cxx
+                         TestMazeRecursiveDivisionLog.cxx
+                         TestMazeSidewinderLog.cxx)
 
   cxx_gtest(TestModuleMazeLog "${MODULE_DS_LOG_SRCS}" ${HUL_SRCS})
 endif()
@@ -39,12 +39,12 @@ endif()
 # Build Testing Log executables for the data logs generation
 # --------------------------------------------------------------------------
 if(BUILD_TESTING_GEN_LOGS)
-  set(MODULE_DS_GEN_LOGS_SRCS #TestMazeBinaryTreeGenLogs.cxx
-                         TestMazeDFSGenLogs.cxx
-                         TestMazeKruskalsGenLogs.cxx
-                         TestMazePrimsGenLogs.cxx)
-                         #TestMazeRecursiveDivisionGenLogs.cxx
-                         #TestMazeSidewinderGenLogs.cxx)
+  set(MODULE_DS_GEN_LOGS_SRCS TestMazeBinaryTreeGenLogs.cxx
+                              TestMazeDFSGenLogs.cxx
+                              TestMazeKruskalsGenLogs.cxx
+                              TestMazePrimsGenLogs.cxx
+                              TestMazeRecursiveDivisionGenLogs.cxx
+                              TestMazeSidewinderGenLogs.cxx)
 
   file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/binary_tree)
   file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/depth_first_search)

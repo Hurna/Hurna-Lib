@@ -21,14 +21,12 @@
 #define MODULE_DS_MAZE_DFS_LOG_HXX
 
 #include <Logger/algorithm.hxx>
-#include <Logger/command.hxx>
 #include <Logger/grid.hxx>
 #include <Logger/stack.hxx>
 
 // STD includes
 #include <memory>
 #include <random>
-#include <stack>
 
 namespace hul
 {
@@ -40,11 +38,10 @@ namespace hul
     typedef Grid<CellInfoBase> Maze;
     typedef Maze::Cell Cell;
     typedef Maze::Point Point;
-    //typedef Stack<std::shared_ptr<Cell>> StackCellPtr;
 
     static const String GetName() { return "Depth First Search Maze Generator"; }
     static const String GetType() { return "algorithm"; }
-    static const String GetVersion() { return "1.0.0"; }
+    static const String GetVersion() { return "2.0.0"; }
 
     ///
     static std::unique_ptr<Maze> Build(Ostream& os, const uint8_t width, const uint8_t height,
@@ -119,12 +116,11 @@ namespace hul
         return nullptr;
       }
 
-      // The maze will own the logger as well
-      auto maze(std::unique_ptr<Maze>(new Maze(logger, width, height)));
-      std::mt19937 mt(seed);      // Initialize random generator based on Mersenne Twister algorithm
+      auto maze(std::unique_ptr<Maze>(new Maze(logger, width, height))); // Initialize Maze
+      std::mt19937 mt(seed);                          // Initialize random generator (Mersenne Twister)
+      Stack<std::shared_ptr<Cell>> pathStack(logger); // Keep track of the cell path
 
       logger->StartArray("locals");
-        Stack<std::shared_ptr<Cell>> pathStack(logger, "pathStack"); // Keep track of the cell path
         pathStack.Log();
       logger->EndArray();
 
@@ -134,7 +130,6 @@ namespace hul
       (*maze)[startPoint.x][startPoint.y]->info.rootDistance = 0;
       (*maze)[startPoint.x][startPoint.y]->info.isVisited = true;
       pathStack.push((*maze)[startPoint.x][startPoint.y]);
-
 
       logger->StartLoop("While there is cell within the stack:");
       logger->Comment("Take cell at the top and retrieve all its unvisited neighboors.");
@@ -172,7 +167,6 @@ namespace hul
         }
       }
       logger->EndLoop();
-      logger->Return<bool>(true);
       logger->EndArray();
 
       // Add Statistical informations
